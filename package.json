@@ -1,7 +1,7 @@
 {
   "name": "@trustquery/trace",
   "description": "TrustQuery Trace - Trace data disambiguation conversations with versioned semantic annotations",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Ron Itelman",
   "bin": {
     "tql": "bin/run.js"
