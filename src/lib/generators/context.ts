@@ -1,5 +1,5 @@
 export function generateContextFacet(): string {
-  const headers = ['index', 'key', 'value']
+  const headers = ['key', 'value']
 
   // Calculate column widths based on header names
   const colWidths = headers.map((h) => h.length)
@@ -7,8 +7,8 @@ export function generateContextFacet(): string {
   // Build the table
   const lines: string[] = []
 
-  // Add prefix with row count of 0 (no data rows on initialization)
-  lines.push('@context[0]:')
+  // Add prefix
+  lines.push('@context:')
 
   // Add header row
   const headerRow = '| ' + headers.map((h, i) => h.padEnd(colWidths[i])).join(' | ') + ' |'

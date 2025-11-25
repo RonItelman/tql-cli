@@ -1,0 +1,937 @@
+#document[0]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition |
+|----------------------|------------|
+| transfer_id          |            |
+| timestamp            |            |
+| from_wallet_id       |            |
+| to_wallet_id         |            |
+| amount_usd           |            |
+| stablecoin_type      |            |
+| purpose              |            |
+| status               |            |
+| settlement_time_mins |            |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format |
+|----------------------|-------------|----------|----------|----------|--------|
+| transfer_id          |             |          |          |          |        |
+| timestamp            |             |          |          |          |        |
+| from_wallet_id       |             |          |          |          |        |
+| to_wallet_id         |             |          |          |          |        |
+| amount_usd           |             |          |          |          |        |
+| stablecoin_type      |             |          |          |          |        |
+| purpose              |             |          |          |          |        |
+| status               |             |          |          |          |        |
+| settlement_time_mins |             |          |          |          |        |
+
+@ambiguity:
+| query_trigger | ambiguity_type | ambiguity_risk |
+|---------------|----------------|----------------|
+
+@intent:
+| query_trigger | clarifying_question | options | user_response | user_confirmed |
+|---------------|---------------------|---------|---------------|----------------|
+
+@context:
+| key | value |
+|-----|-------|
+
+@query:
+| user_message | timestamp_utc |
+|--------------|---------------|
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(0,1):
+@meaning[1]:
+
+| Δ   | column      | definition                                     |
+|-----|-------------|------------------------------------------------|
+| -   | transfer_id |                                                |
+| +   | transfer_id | Unique identifier for each stablecoin transfer |
+
+#document[1]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format |
+|----------------------|-------------|----------|----------|----------|--------|
+| transfer_id          |             |          |          |          |        |
+| timestamp            |             |          |          |          |        |
+| from_wallet_id       |             |          |          |          |        |
+| to_wallet_id         |             |          |          |          |        |
+| amount_usd           |             |          |          |          |        |
+| stablecoin_type      |             |          |          |          |        |
+| purpose              |             |          |          |          |        |
+| status               |             |          |          |          |        |
+| settlement_time_mins |             |          |          |          |        |
+
+@ambiguity:
+| query_trigger | ambiguity_type | ambiguity_risk |
+|---------------|----------------|----------------|
+
+@intent:
+| query_trigger | clarifying_question | options | user_response | user_confirmed |
+|---------------|---------------------|---------|---------------|----------------|
+
+@context:
+| key | value |
+|-----|-------|
+
+@query:
+| user_message | timestamp_utc |
+|--------------|---------------|
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(1,2):
+@structure[1]:
+
+| Δ   | column      | nullAllowed | dataType | minValue | maxValue | format       |
+|-----|-------------|-------------|----------|----------|----------|--------------|
+| -   | transfer_id |             |          |          |          |              |
+| +   | transfer_id | false       | string   |          |          | TXN-YYYY-NNN |
+
+#document[2]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type | ambiguity_risk |
+|---------------|----------------|----------------|
+
+@intent:
+| query_trigger | clarifying_question | options | user_response | user_confirmed |
+|---------------|---------------------|---------|---------------|----------------|
+
+@context:
+| key | value |
+|-----|-------|
+
+@query:
+| user_message | timestamp_utc |
+|--------------|---------------|
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(2,3):
+@ambiguity[1]:
+
+| Δ   | ambiguity_risk         | ambiguity_type       | query_trigger |
+|-----|------------------------|----------------------|---------------|
+| +   | user's timezone vs UTC | temporal_perspective | yesterday     |
+
+#document[3]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question | options | user_response | user_confirmed |
+|---------------|---------------------|---------|---------------|----------------|
+
+@context:
+| key | value |
+|-----|-------|
+
+@query:
+| user_message | timestamp_utc |
+|--------------|---------------|
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(3,4):
+@intent[1]:
+
+| Δ   | clarifying_question                                | options                    | query_trigger | user_confirmed | user_response |
+|-----|----------------------------------------------------|----------------------------|---------------|----------------|---------------|
+| +   | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] | yesterday     |                |               |
+
+#document[4]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question                                | options                    | user_response | user_confirmed |
+|---------------|----------------------------------------------------|----------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] |               |                |
+
+@context:
+| key | value |
+|-----|-------|
+
+@query:
+| user_message | timestamp_utc |
+|--------------|---------------|
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(4,5):
+@context[2]:
+
+| Δ   | key      | value            |
+|-----|----------|------------------|
+| +   | user     | analyst@acme.com |
+| +   | timezone | America/New_York |
+
+#document[5]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question                                | options                    | user_response | user_confirmed |
+|---------------|----------------------------------------------------|----------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] |               |                |
+
+@context:
+| key      | value            |
+|----------|------------------|
+| user     | analyst@acme.com |
+| timezone | America/New_York |
+
+@query:
+| user_message | timestamp_utc |
+|--------------|---------------|
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(5,6):
+@query[1]:
+
+| Δ   | timestamp_utc        | user_message                        |
+|-----|----------------------|-------------------------------------|
+| +   | 2024-11-05T18:30:00Z | How much was transferred yesterday? |
+
+#document[6]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question                                | options                    | user_response | user_confirmed |
+|---------------|----------------------------------------------------|----------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] |               |                |
+
+@context:
+| key      | value            |
+|----------|------------------|
+| user     | analyst@acme.com |
+| timezone | America/New_York |
+
+@query:
+| user_message                        | timestamp_utc        |
+|-------------------------------------|----------------------|
+| How much was transferred yesterday? | 2024-11-05T18:30:00Z |
+
+@tasks:
+| name | description | formula |
+|------|-------------|---------|
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(6,7):
+@tasks[1]:
+
+| Δ   | description                    | formula                                  | name              |
+|-----|--------------------------------|------------------------------------------|-------------------|
+| +   | Sum of all completed transfers | SUM(amount_usd WHERE status='completed') | total_transferred |
+
+#document[7]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question                                | options                    | user_response | user_confirmed |
+|---------------|----------------------------------------------------|----------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] |               |                |
+
+@context:
+| key      | value            |
+|----------|------------------|
+| user     | analyst@acme.com |
+| timezone | America/New_York |
+
+@query:
+| user_message                        | timestamp_utc        |
+|-------------------------------------|----------------------|
+| How much was transferred yesterday? | 2024-11-05T18:30:00Z |
+
+@tasks:
+| name              | description                    | formula                                  |
+|-------------------|--------------------------------|------------------------------------------|
+| total_transferred | Sum of all completed transfers | SUM(amount_usd WHERE status='completed') |
+
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
+
+$diff(7,8):
+@score[1]:
+
+| Δ   | measure      | value                 |
+|-----|--------------|-----------------------|
+| -   | range-values |                       |
+| +   | range-values | $50,000 to $3,500,000 |
+
+#document[8]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question                                | options                    | user_response | user_confirmed |
+|---------------|----------------------------------------------------|----------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] |               |                |
+
+@context:
+| key      | value            |
+|----------|------------------|
+| user     | analyst@acme.com |
+| timezone | America/New_York |
+
+@query:
+| user_message                        | timestamp_utc        |
+|-------------------------------------|----------------------|
+| How much was transferred yesterday? | 2024-11-05T18:30:00Z |
+
+@tasks:
+| name              | description                    | formula                                  |
+|-------------------|--------------------------------|------------------------------------------|
+| total_transferred | Sum of all completed transfers | SUM(amount_usd WHERE status='completed') |
+
+@score:
+| measure                   | value                 |
+|---------------------------|-----------------------|
+| range-values              | $50,000 to $3,500,000 |
+| number-of-interpretations |                       |
+| Uncertainty Ratio (UR)    |                       |
+| Missing Certainty Ratio   |                       |
+
+$diff(8,9):
+@context[1]:
+
+| Δ   | key              | value                |
+|-----|------------------|----------------------|
+| +   | current_time_utc | 2024-11-05T23:00:00Z |
+
+#document[9]:
+@table:
+| transfer_id  | timestamp            | from_wallet_id | to_wallet_id | amount_usd | stablecoin_type | purpose                            | status    | settlement_time_mins |
+|--------------|----------------------|----------------|--------------|------------|-----------------|------------------------------------|-----------|----------------------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | WALLET-US-01   | WALLET-SG-02 | 250000     | USDC            | Vendor Payment Singapore           | completed | 3                    |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | WALLET-UK-03   | WALLET-US-01 | 500000     | USDC            | Intercompany Rebalancing           | completed | 2                    |
+| TXN-2024-003 | 2024-11-04T18:20:45Z | WALLET-US-01   | WALLET-BR-04 | 175000     | USDC            | Payroll Brazil                     | completed | 4                    |
+| TXN-2024-004 | 2024-11-04T22:33:18Z | WALLET-SG-02   | WALLET-JP-01 | 300000     | USDT            | Asia Regional Transfer             | completed | 3                    |
+| TXN-2024-005 | 2024-11-05T02:05:52Z | WALLET-US-01   | WALLET-UK-03 | 1850000    | USDC            | European Market Entry Investment   | completed | 5                    |
+| TXN-2024-006 | 2024-11-04T03:45:30Z | WALLET-AU-01   | WALLET-SG-02 | 180000     | USDC            | Australia-Singapore Settlement     | completed | 2                    |
+| TXN-2024-007 | 2024-11-05T04:15:00Z | WALLET-BR-04   | WALLET-US-01 | 2200000    | USDT            | Latin America Acquisition Payment  | completed | 3                    |
+| TXN-2024-008 | 2024-11-04T01:30:00Z | WALLET-JP-01   | WALLET-SG-02 | 450000     | USDC            | Japan Evening Settlement           | completed | 2                    |
+| TXN-2024-009 | 2024-11-04T16:00:00Z | WALLET-DE-01   | WALLET-UK-03 | 280000     | USDC            | EU Intra-region Transfer           | completed | 4                    |
+| TXN-2024-010 | 2024-11-05T01:20:00Z | WALLET-SG-02   | WALLET-AU-01 | 1650000    | USDT            | Asia-Pacific Expansion Fund        | completed | 2                    |
+| TXN-2024-011 | 2024-11-04T06:30:00Z | WALLET-IN-01   | WALLET-SG-02 | 340000     | USDC            | India Operations Payment           | completed | 3                    |
+| TXN-2024-012 | 2024-11-04T20:45:00Z | WALLET-MX-01   | WALLET-US-01 | 165000     | USDC            | Mexico-US Settlement               | completed | 2                    |
+| TXN-2024-013 | 2024-11-04T02:15:00Z | WALLET-SG-02   | WALLET-US-01 | 520000     | USDT            | Asia Treasury Transfer             | completed | 3                    |
+| TXN-2024-014 | 2024-11-05T03:30:00Z | WALLET-UK-03   | WALLET-DE-01 | 2450000    | USDC            | European Infrastructure Investment | completed | 4                    |
+| TXN-2024-015 | 2024-11-04T12:00:00Z | WALLET-CA-01   | WALLET-US-01 | 420000     | USDC            | Canada-US Cross-border             | completed | 2                    |
+| TXN-2024-016 | 2024-11-04T04:45:00Z | WALLET-HK-01   | WALLET-SG-02 | 380000     | USDT            | Hong Kong Settlement               | completed | 3                    |
+| TXN-2024-017 | 2024-11-04T23:50:00Z | WALLET-AU-01   | WALLET-NZ-01 | 290000     | USDC            | Oceania Regional Transfer          | completed | 2                    |
+| TXN-2024-018 | 2024-11-05T00:25:00Z | WALLET-BR-04   | WALLET-AR-01 | 155000     | USDC            | South America Intra-region         | completed | 3                    |
+| TXN-2024-019 | 2024-11-04T10:15:00Z | WALLET-AE-01   | WALLET-UK-03 | 520000     | USDT            | Middle East-Europe Transfer        | completed | 4                    |
+| TXN-2024-020 | 2024-11-04T19:30:00Z | WALLET-US-01   | WALLET-MX-01 | 385000     | USDC            | US-Mexico Operations               | completed | 2                    |
+| TXN-2024-021 | 2024-11-05T04:50:00Z | WALLET-IN-01   | WALLET-AE-01 | 1950000    | USDC            | India-UAE Strategic Partnership    | completed | 5                    |
+| TXN-2024-022 | 2024-11-04T07:20:00Z | WALLET-ZA-01   | WALLET-UK-03 | 310000     | USDT            | South Africa-UK Transfer           | completed | 3                    |
+| TXN-2024-023 | 2024-11-04T15:45:00Z | WALLET-FR-01   | WALLET-DE-01 | 245000     | USDC            | France-Germany Settlement          | completed | 2                    |
+| TXN-2024-024 | 2024-11-04T00:55:00Z | WALLET-KR-01   | WALLET-JP-01 | 650000     | USDT            | Korea-Japan Night Transfer         | completed | 3                    |
+| TXN-2024-025 | 2024-11-05T02:40:00Z | WALLET-SG-02   | WALLET-HK-01 | 1580000    | USDC            | Singapore Strategic Investment     | completed | 2                    |
+
+@meaning:
+| column               | definition                                     |
+|----------------------|------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer |
+| timestamp            |                                                |
+| from_wallet_id       |                                                |
+| to_wallet_id         |                                                |
+| amount_usd           |                                                |
+| stablecoin_type      |                                                |
+| purpose              |                                                |
+| status               |                                                |
+| settlement_time_mins |                                                |
+
+@structure:
+| column               | nullAllowed | dataType | minValue | maxValue | format       |
+|----------------------|-------------|----------|----------|----------|--------------|
+| transfer_id          | false       | string   |          |          | TXN-YYYY-NNN |
+| timestamp            |             |          |          |          |              |
+| from_wallet_id       |             |          |          |          |              |
+| to_wallet_id         |             |          |          |          |              |
+| amount_usd           |             |          |          |          |              |
+| stablecoin_type      |             |          |          |          |              |
+| purpose              |             |          |          |          |              |
+| status               |             |          |          |          |              |
+| settlement_time_mins |             |          |          |          |              |
+
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk         |
+|---------------|----------------------|------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC |
+
+@intent:
+| query_trigger | clarifying_question                                | options                    | user_response | user_confirmed |
+|---------------|----------------------------------------------------|----------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC] |               |                |
+
+@context:
+| key              | value                |
+|------------------|----------------------|
+| user             | analyst@acme.com     |
+| timezone         | America/New_York     |
+| current_time_utc | 2024-11-05T23:00:00Z |
+
+@query:
+| user_message                        | timestamp_utc        |
+|-------------------------------------|----------------------|
+| How much was transferred yesterday? | 2024-11-05T18:30:00Z |
+
+@tasks:
+| name              | description                    | formula                                  |
+|-------------------|--------------------------------|------------------------------------------|
+| total_transferred | Sum of all completed transfers | SUM(amount_usd WHERE status='completed') |
+
+@score:
+| measure                   | value                 |
+|---------------------------|-----------------------|
+| range-values              | $50,000 to $3,500,000 |
+| number-of-interpretations |                       |
+| Uncertainty Ratio (UR)    |                       |
+| Missing Certainty Ratio   |                       |

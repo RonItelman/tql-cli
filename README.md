@@ -40,92 +40,92 @@ When someone asks "How much money was transferred yesterday?", there are multipl
 
 A `.tql` file contains 9 sections:
 
-### 1. `@data[N]`
+### 1. `@table`
 The actual tabular data (CSV-style or table format)
 
 ```
-@data[25]:
-| index | transfer_id  | timestamp            | amount_usd | status    |
-|-------|--------------|----------------------|------------|-----------|
-| 1     | TXN-2024-001 | 2024-11-04T08:15:23Z | 250000     | completed |
-| 2     | TXN-2024-002 | 2024-11-04T14:42:11Z | 500000     | completed |
+@table:
+| transfer_id  | timestamp            | amount_usd | status    |
+|--------------|----------------------|------------|-----------|
+| TXN-2024-001 | 2024-11-04T08:15:23Z | 250000     | completed |
+| TXN-2024-002 | 2024-11-04T14:42:11Z | 500000     | completed |
 ...
 ```
 
-### 2. `@meaning[N]`
+### 2. `@meaning`
 Business definitions for each column
 - What does this column represent?
 - Has the user confirmed this definition?
 
 ```
-@meaning[9]:
-| index | column               | definition                                              | user_confirmed |
-|-------|----------------------|---------------------------------------------------------|----------------|
-| 1     | transfer_id          | Unique identifier for each stablecoin transfer          |                |
-| 2     | timestamp            | ISO 8601 format with timezone                           |                |
-| 3     | amount_usd           | Transfer value in US Dollars, scaled in thousands       |                |
-| 4     | status               | Current state of the transfer transaction               |                |
+@meaning:
+| column               | definition                                              |
+|----------------------|---------------------------------------------------------|
+| transfer_id          | Unique identifier for each stablecoin transfer          |
+| timestamp            | ISO 8601 format with timezone                           |
+| amount_usd           | Transfer value in US Dollars, scaled in thousands       |
+| status               | Current state of the transfer transaction               |
 ```
 
-### 3. `@structure[N]`
+### 3. `@structure`
 Technical constraints (inspired by JSON Schema)
 - Data types, null handling, formats, min/max values
 - Has the user confirmed these constraints?
 
 ```
-@structure[9]:
-| index | column      | nullAllowed | dataType | minValue | maxValue | format      | user_confirmed |
-|-------|-------------|-------------|----------|----------|----------|-------------|----------------|
-| 1     | transfer_id | false       | string   | -        | -        |             |                |
-| 2     | timestamp   | false       | datetime | -        | -        | ISO8601+TZ  |                |
-| 3     | amount_usd  | false       | decimal  | 0        | -        | -           |                |
-| 4     | status      | false       | enum     | -        | -        | completed|pending|failed |  |
+@structure:
+| column      | nullAllowed | dataType | minValue | maxValue | format                        |
+|-------------|-------------|----------|----------|----------|-------------------------------|
+| transfer_id | false       | string   | -        | -        |                               |
+| timestamp   | false       | datetime | -        | -        | ISO8601+TZ                    |
+| amount_usd  | false       | decimal  | 0        | -        | -                             |
+| status      | false       | enum     | -        | -        | completed|pending|failed     |
 ```
 
-### 4. `@context[N]`
+### 4. `@context`
 Query execution context
 - Current user, timezone, date/time
 - Any other relevant environmental info
 
 ```
-@context[4]:
-| index | key                  | value                         |
-|-------|----------------------|-------------------------------|
-| 1     | user                 | jon@citi.com                  |
-| 2     | user_timezone        | America/New_York              |
-| 3     | current_time_utc     | 2024-11-05T23:00:00Z          |
-| 4     | current_time_local   | 2024-11-05T18:00:00-05:00     |
+@context:
+| key                  | value                         |
+|----------------------|-------------------------------|
+| user                 | jon@citi.com                  |
+| user_timezone        | America/New_York              |
+| current_time_utc     | 2024-11-05T23:00:00Z          |
+| current_time_local   | 2024-11-05T18:00:00-05:00     |
 ```
 
-### 5. `@ambiguity[N]`
+### 5. `@ambiguity`
 Known ambiguities that affect queries
 - What triggers the ambiguity (e.g., "yesterday", "profit")
 - What type of ambiguity (temporal, directional, scope)
 - What's at risk if not resolved
 
 ```
-@ambiguity[2]:
-| index | query_trigger | ambiguity_type       | ambiguity_risk                              |
-|-------|---------------|----------------------|---------------------------------------------|
-| 1     | yesterday     | temporal_perspective | user's timezone vs UTC (data timezone)      |
-| 2     | amount_usd    | unit_scale           | User may be unaware units are in thousands  |
+@ambiguity:
+| query_trigger | ambiguity_type       | ambiguity_risk                              |
+|---------------|----------------------|---------------------------------------------|
+| yesterday     | temporal_perspective | user's timezone vs UTC (data timezone)      |
+| amount_usd    | unit_scale           | User may be unaware units are in thousands  |
 ```
 
-### 6. `@intent[N]`
+### 6. `@intent`
 Pre-defined clarifying questions
 - The question to ask the user
 - Available options
 - Space to record user responses
 
 ```
-@intent[2]:
-| index | query_trigger | clarifying_question                            | options                                   | user_response | user_confirmed |
-|-------|---------------|------------------------------------------------|-------------------------------------------|---------------|----------------|
-| 1     | yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC]            |               |                |
-| 2     | amount_usd    | The amounts are in thousands. Show as-is or converted? | [Show as-is (250), Convert to dollars ($250,000)] | | |
+@intent:
+| query_trigger | clarifying_question                            | options                                   | user_response | user_confirmed |
+|---------------|------------------------------------------------|-------------------------------------------|---------------|----------------|
+| yesterday     | Which timezone should I use to define 'yesterday'? | [Your timezone (EST), UTC]            |               |                |
+| amount_usd    | The amounts are in thousands. Show as-is or converted? | [Show as-is (250), Convert to dollars ($250,000)] | | |
 ```
 
-### 7. `@score[N]`
+### 7. `@score`
 A standard way to score the precision of the query and data
 - range-values: What is the range, min to max in values, for example $50,000 to $3,500,000
 - number-of-interpretations: If there are 4 answers, such as $50,000 |  $95,000 | $1,125,0000 | $3,500,000 that are valid based on unresolved ambiguity
@@ -134,41 +134,86 @@ A standard way to score the precision of the query and data
 
 
 ```
-@score[4]:
-| index | measure                   | value |
-|-------|---------------------------|-------|
-| 1     | range-values              |       |
-| 2     | number-of-interpretations |       |
-| 3     | Uncertainty Ratio (UR)    |       |
-| 4     | Missing Certainty Ratio   |       |
+@score:
+| measure                   | value |
+|---------------------------|-------|
+| range-values              |       |
+| number-of-interpretations |       |
+| Uncertainty Ratio (UR)    |       |
+| Missing Certainty Ratio   |       |
 ```
 
-### 8. `@query[N]`
+### 8. `@query`
 Query history log
 - The message/query text from the user
 - When it was asked (ISO 8601 UTC timestamp)
 
 ```
-@query[2]:
-| index | user_message                                    | timestamp_utc        |
-|-------|-------------------------------------------------|----------------------|
-| 1     | How much was transferred yesterday?             | 2024-11-05T23:15:42Z |
-| 2     | What's the average settlement time?             | 2024-11-05T23:20:11Z |
+@query:
+| user_message                                    | timestamp_utc        |
+|-------------------------------------------------|----------------------|
+| How much was transferred yesterday?             | 2024-11-05T23:15:42Z |
+| What's the average settlement time?             | 2024-11-05T23:20:11Z |
 ```
 
-### 9. `@tasks[N]`
+### 9. `@tasks`
 Computational tasks that can be performed on the data
 - Task name
 - Description of what it calculates
 - Formula or expression to compute it
 
 ```
-@tasks[2]:
-| index | name              | description                           | formula                                    |
-|-------|-------------------|---------------------------------------|--------------------------------------------|
-| 1     | total_transferred | Sum of all completed transfers        | SUM(amount_usd WHERE status='completed')   |
-| 2     | avg_settlement    | Average settlement time in minutes    | AVG(settlement_time_mins)                  |
+@tasks:
+| name              | description                           | formula                                    |
+|-------------------|---------------------------------------|--------------------------------------------|
+| total_transferred | Sum of all completed transfers        | SUM(amount_usd WHERE status='completed')   |
+| avg_settlement    | Average settlement time in minutes    | AVG(settlement_time_mins)                  |
 ```
+
+---
+
+## Referencing Scheme
+
+TQL uses a structured referencing syntax to address specific elements within documents and across files.
+
+### Syntax Structure
+
+```
+#document[N].@facet[N].column_name
+```
+
+### Components
+
+- **document**: `#document[N]` - Document version within file (0-based)
+- **facet**: `@table | @meaning | @structure | @context | @query | @tasks | @score | @ambiguity | @intent`
+- **row**: `[N]` - Row index within facet (0-based)
+- **column**: Column name from the facet table
+
+### Examples
+
+**Within a single .tql file:**
+```
+#document[0].@table[10].amount_usd       # "amount_usd" column, row 10 (11th row)
+#document[1].@meaning[1].definition      # "definition" column, row 1 (2nd row)
+#document[2].@context[0].user_timezone   # "user_timezone" column, row 0 (1st row)
+```
+
+**Across multiple files (graph references):**
+```
+acme-session-123.tql#document[0].@table[5].transfer_id
+techcorp-session-456.tql#document[1].@meaning[2].definition
+```
+
+### Diff References
+
+Diffs track changes between document versions:
+
+```
+$diff(0,1).@context[0]    # change in row 0 of @context between docs 0 and 1
+$diff(1,2).@meaning[3]    # change in row 3 of @meaning between docs 1 and 2
+```
+
+**Note**: All indexing is 0-based (developer-friendly) for programmatic access.
 
 ---
 
@@ -227,9 +272,9 @@ const conversation = applyChangesToConversation(
 )
 
 // conversation.sequence now has:
-// [0] #document[+0] - original
-// [1] #document[+1] - with changes
-// [2] $diff[+0→+1] - what changed
+// [0] #document[0] - original
+// [1] $diff(0,1) - what changed
+// [2] #document[1] - with changes
 ```
 
 ### As a Library (Browser/Chrome Extension)

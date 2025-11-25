@@ -18,7 +18,6 @@ export interface TableFacet {
 
 export interface TableRow {
   [key: string]: number | string  // Dynamic columns from CSV
-  index: number
 }
 
 export interface MeaningFacet {
@@ -28,7 +27,6 @@ export interface MeaningFacet {
 export interface MeaningRow {
   column: string
   definition: string
-  index: number
 }
 
 export interface StructureFacet {
@@ -39,7 +37,6 @@ export interface StructureRow {
   column: string
   dataType: string
   format: string
-  index: number
   maxValue: string
   minValue: string
   nullAllowed: string
@@ -52,7 +49,6 @@ export interface AmbiguityFacet {
 export interface AmbiguityRow {
   ambiguity_risk: string
   ambiguity_type: string
-  index: number
   query_trigger: string
 }
 
@@ -62,7 +58,6 @@ export interface IntentFacet {
 
 export interface IntentRow {
   clarifying_question: string
-  index: number
   options: string
   query_trigger: string
   user_confirmed: string
@@ -74,7 +69,6 @@ export interface ContextFacet {
 }
 
 export interface ContextRow {
-  index: number
   key: string
   value: string
 }
@@ -84,7 +78,6 @@ export interface QueryFacet {
 }
 
 export interface QueryRow {
-  index: number
   timestamp_utc: string
   user_message: string
 }
@@ -96,7 +89,6 @@ export interface TasksFacet {
 export interface TasksRow {
   description: string
   formula: string
-  index: number
   name: string
 }
 
@@ -105,7 +97,6 @@ export interface ScoreFacet {
 }
 
 export interface ScoreRow {
-  index: number
   measure: string
   value: string
 }

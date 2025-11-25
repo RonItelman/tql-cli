@@ -1,5 +1,5 @@
 export function generateTasksFacet(): string {
-  const headers = ['index', 'name', 'description', 'formula']
+  const headers = ['name', 'description', 'formula']
 
   // Calculate column widths
   const colWidths = headers.map((h) => h.length)
@@ -7,8 +7,8 @@ export function generateTasksFacet(): string {
   // Build the table
   const lines: string[] = []
 
-  // Add prefix with row count of 0 (no data rows on initialization)
-  lines.push('@tasks[0]:')
+  // Add prefix
+  lines.push('@tasks:')
 
   // Add header row
   const headerRow = '| ' + headers.map((h, i) => h.padEnd(colWidths[i])).join(' | ') + ' |'

@@ -27,50 +27,41 @@ export function parseTql(filePath: string): TqlConversation {
  */
 export function parseTqlConversationFromString(content: string): TqlConversation {
   const lines = content.split('\n')
-
-  // Check for conversation header
-  const conversationMatch = lines[0]?.match(/^#conversation\[(\d+)\]:/)
-  if (!conversationMatch) {
-    // Legacy format: single document without conversation wrapper
-    // Parse as single document and wrap in conversation
-    const doc = parseTqlDocumentFromString(content)
-    return {
-      sequence: [{'#document[+0]': doc}],
-    }
-  }
-
-  const expectedDocCount = Number.parseInt(conversationMatch[1], 10)
   const sequence: TqlConversation['sequence'] = []
 
-  // Split content by #document[+n]: or $diff[+i→+j]: headers
+  // Split content by #document[n]: or $diff(i,j): headers
   let currentItemKey: string | null = null
   let currentItemContent: string[] = []
 
-  for (let i = 1; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
 
-    // Check for document header: #document[+n]:
-    const docMatch = line.match(/^(#document\[\+\d+\]):/)
+    // Check for document header: #document[n]: (with or without +)
+    const docMatch = line.match(/^(#document\[\+?(\d+)\]):/)
     if (docMatch) {
       // Save previous item if exists
       if (currentItemKey && currentItemContent.length > 0) {
         addItemToSequence(sequence, currentItemKey, currentItemContent.join('\n'))
       }
 
-      currentItemKey = docMatch[1]
+      // Normalize to internal format with +
+      currentItemKey = `#document[+${docMatch[2]}]`
       currentItemContent = []
       continue
     }
 
-    // Check for diff header: $diff[+i→+j]:
-    const diffMatch = line.match(/^(\$diff\[\+\d+→\+\d+\]):/)
+    // Check for diff header: $diff(i,j): or legacy $diff[+i→+j]:
+    const diffMatch = line.match(/^(\$diff(?:\((\d+),(\d+)\)|\[\+?(\d+)→\+?(\d+)\])):/)
     if (diffMatch) {
       // Save previous item if exists
       if (currentItemKey && currentItemContent.length > 0) {
         addItemToSequence(sequence, currentItemKey, currentItemContent.join('\n'))
       }
 
-      currentItemKey = diffMatch[1]
+      // Normalize to internal format with +
+      const fromIdx = diffMatch[2] || diffMatch[4]
+      const toIdx = diffMatch[3] || diffMatch[5]
+      currentItemKey = `$diff[+${fromIdx}→+${toIdx}]`
       currentItemContent = []
       continue
     }
@@ -86,12 +77,12 @@ export function parseTqlConversationFromString(content: string): TqlConversation
     addItemToSequence(sequence, currentItemKey, currentItemContent.join('\n'))
   }
 
-  // Validate document count
-  const actualDocCount = sequence.filter((item) => Object.keys(item)[0].startsWith('#document')).length
-  if (actualDocCount !== expectedDocCount) {
-    throw new Error(
-      `Conversation header indicates ${expectedDocCount} documents, but found ${actualDocCount}`,
-    )
+  // If no items were found, try to parse as a single document (legacy format)
+  if (sequence.length === 0) {
+    const doc = parseTqlDocumentFromString(content)
+    return {
+      sequence: [{'#document[+0]': doc}],
+    }
   }
 
   return {sequence}
@@ -124,12 +115,13 @@ function parseDiffFromString(content: string): any {
   let currentChanges: any[] = []
   let inTable = false
   let headers: string[] = []
+  let rowIndex = 0
 
   for (const line of lines) {
     const trimmed = line.trim()
 
-    // Match facet headers like @meaning[1]:
-    const facetMatch = trimmed.match(/^@(\w+)\[(\d+)\]:/)
+    // Match facet headers like @meaning:
+    const facetMatch = trimmed.match(/^@(\w+):/)
     if (facetMatch) {
       // Save previous facet if exists
       if (currentFacet && currentChanges.length > 0) {
@@ -145,6 +137,7 @@ function parseDiffFromString(content: string): any {
       currentFacet = facetMatch[1]
       currentChanges = []
       inTable = false
+      rowIndex = 0
       continue
     }
 
@@ -176,15 +169,17 @@ function parseDiffFromString(content: string): any {
         currentChanges.push({
           type: 'added',
           after: row,
-          index: row.index,
+          index: rowIndex,
         })
       } else if (delta === '-') {
         currentChanges.push({
           type: 'removed',
           before: row,
-          index: row.index,
+          index: rowIndex,
         })
       }
+
+      rowIndex++
     }
   }
 
@@ -363,10 +358,10 @@ function isTableRow(line: string): boolean {
 
 /**
  * Parse facet header and return facet name if found
- * (e.g., @table[25]: returns 'table')
+ * (e.g., @table: returns 'table')
  */
 function parseFacetHeader(line: string): null | string {
-  const facetMatch = line.match(/^@(\w+)\[\d+\]:/)
+  const facetMatch = line.match(/^@(\w+):/)
   return facetMatch ? facetMatch[1] : null
 }
 

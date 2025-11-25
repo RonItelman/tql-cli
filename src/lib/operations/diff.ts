@@ -84,9 +84,9 @@ function computeFacetDiff(
 ): FacetDiff {
   const changes: RowChange[] = []
 
-  // Create maps by index for easy lookup
-  const beforeMap = new Map(beforeRows.map((row) => [row.index, row]))
-  const afterMap = new Map(afterRows.map((row) => [row.index, row]))
+  // Create maps by array index for easy lookup
+  const beforeMap = new Map(beforeRows.map((row, idx) => [idx, row]))
+  const afterMap = new Map(afterRows.map((row, idx) => [idx, row]))
 
   // Get all unique indices
   const allIndices = new Set([...afterMap.keys(), ...beforeMap.keys()])

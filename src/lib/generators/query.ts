@@ -1,5 +1,5 @@
 export function generateQueryFacet(): string {
-  const headers = ['index', 'user_message', 'timestamp_utc']
+  const headers = ['user_message', 'timestamp_utc']
 
   // Calculate column widths
   const colWidths = headers.map((h) => h.length)
@@ -7,8 +7,8 @@ export function generateQueryFacet(): string {
   // Build the table
   const lines: string[] = []
 
-  // Add prefix with row count of 0 (no data rows on initialization)
-  lines.push('@query[0]:')
+  // Add prefix
+  lines.push('@query:')
 
   // Add header row
   const headerRow = '| ' + headers.map((h, i) => h.padEnd(colWidths[i])).join(' | ') + ' |'

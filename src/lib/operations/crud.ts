@@ -47,47 +47,35 @@ type FacetRowType<T extends FacetName> = T extends 'table'
  * Insert a row into a TQL document (in-memory)
  * @param doc - The TQL document object
  * @param facet - The facet to insert into
- * @param data - Row data (without index, will be auto-assigned)
+ * @param data - Row data
  */
 export function insertRowInMemory<T extends FacetName>(
   doc: TqlDocument,
   facet: T,
-  data: Omit<FacetRowType<T>, 'index'>,
+  data: FacetRowType<T>,
 ): void {
   const currentRows = doc[facet].rows
-  const nextIndex = currentRows.length + 1
-
-  const rowWithIndex = {
-    index: nextIndex,
-    ...data,
-  } as FacetRowType<T>
 
   // @ts-expect-error - TypeScript can't infer the row type correctly
-  currentRows.push(rowWithIndex)
+  currentRows.push(data)
 }
 
 /**
  * Insert multiple rows into a TQL document (in-memory)
  * @param doc - The TQL document object
  * @param facet - The facet to insert into
- * @param dataArray - Array of row data (without index)
+ * @param dataArray - Array of row data
  */
 export function insertRowsInMemory<T extends FacetName>(
   doc: TqlDocument,
   facet: T,
-  dataArray: Array<Omit<FacetRowType<T>, 'index'>>,
+  dataArray: Array<FacetRowType<T>>,
 ): void {
   const currentRows = doc[facet].rows
-  let nextIndex = currentRows.length + 1
 
   for (const data of dataArray) {
-    const rowWithIndex = {
-      index: nextIndex++,
-      ...data,
-    } as FacetRowType<T>
-
     // @ts-expect-error - TypeScript can't infer the row type correctly
-    currentRows.push(rowWithIndex)
+    currentRows.push(data)
   }
 }
 
@@ -95,7 +83,7 @@ export function insertRowsInMemory<T extends FacetName>(
  * Delete a row from a TQL document by index (in-memory)
  * @param doc - The TQL document object
  * @param facet - The facet to delete from
- * @param index - The index of the row to delete (1-based)
+ * @param index - The index of the row to delete (0-based)
  */
 export function deleteRowInMemory<T extends FacetName>(
   doc: TqlDocument,
@@ -104,27 +92,19 @@ export function deleteRowInMemory<T extends FacetName>(
 ): void {
   const currentRows = doc[facet].rows as FacetRowType<T>[]
 
-  // Find the row with the matching index
-  const rowIndex = currentRows.findIndex((row) => Number(row.index) === index)
-
-  if (rowIndex === -1) {
-    throw new Error(`Row with index ${index} not found in @${facet} facet`)
+  if (index < 0 || index >= currentRows.length) {
+    throw new Error(`Row at index ${index} not found in @${facet} facet`)
   }
 
   // Remove the row
-  currentRows.splice(rowIndex, 1)
-
-  // Reindex remaining rows
-  for (const [i, row] of currentRows.entries()) {
-    row.index = i + 1
-  }
+  currentRows.splice(index, 1)
 }
 
 /**
  * Delete multiple rows from a TQL document by indices (in-memory)
  * @param doc - The TQL document object
  * @param facet - The facet to delete from
- * @param indices - Array of indices to delete (1-based)
+ * @param indices - Array of indices to delete (0-based)
  */
 export function deleteRowsInMemory<T extends FacetName>(
   doc: TqlDocument,
@@ -138,12 +118,10 @@ export function deleteRowsInMemory<T extends FacetName>(
 
   let deletedCount = 0
 
-  // Delete each row
+  // Delete each row (in descending order to avoid index shifts)
   for (const index of sortedIndices) {
-    const rowIndex = currentRows.findIndex((row) => Number(row.index) === index)
-
-    if (rowIndex !== -1) {
-      currentRows.splice(rowIndex, 1)
+    if (index >= 0 && index < currentRows.length) {
+      currentRows.splice(index, 1)
       deletedCount++
     }
   }
@@ -151,40 +129,31 @@ export function deleteRowsInMemory<T extends FacetName>(
   if (deletedCount === 0) {
     throw new Error(`No rows found with indices ${indices.join(', ')} in @${facet} facet`)
   }
-
-  // Reindex remaining rows
-  for (const [i, row] of currentRows.entries()) {
-    row.index = i + 1
-  }
 }
 
 /**
  * Update a row in a TQL document by index (in-memory)
  * @param doc - The TQL document object
  * @param facet - The facet to update
- * @param index - The index of the row to update (1-based)
- * @param data - New data for the row (without index)
+ * @param index - The index of the row to update (0-based)
+ * @param data - New data for the row
  */
 export function updateRowInMemory<T extends FacetName>(
   doc: TqlDocument,
   facet: T,
   index: number,
-  data: Partial<Omit<FacetRowType<T>, 'index'>>,
+  data: Partial<FacetRowType<T>>,
 ): void {
   const currentRows = doc[facet].rows as FacetRowType<T>[]
 
-  // Find the row with the matching index
-  const rowIndex = currentRows.findIndex((row) => Number(row.index) === index)
-
-  if (rowIndex === -1) {
-    throw new Error(`Row with index ${index} not found in @${facet} facet`)
+  if (index < 0 || index >= currentRows.length) {
+    throw new Error(`Row at index ${index} not found in @${facet} facet`)
   }
 
-  // Update the row (merge with existing data, preserve original index)
-  currentRows[rowIndex] = {
-    ...currentRows[rowIndex],
+  // Update the row (merge with existing data)
+  currentRows[index] = {
+    ...currentRows[index],
     ...data,
-    index: currentRows[rowIndex].index, // Preserve the original index (keep exact type and value)
   } as FacetRowType<T>
 }
 
@@ -196,13 +165,13 @@ export function updateRowInMemory<T extends FacetName>(
  * Insert a row into a TQL file facet
  * @param filePath - Path to the .tql file
  * @param facet - The facet to insert into
- * @param data - Row data (without index, will be auto-assigned)
+ * @param data - Row data
  * @param documentIndex - Index of document in conversation (default: 0)
  */
 export function insertRow<T extends FacetName>(
   filePath: string,
   facet: T,
-  data: Omit<FacetRowType<T>, 'index'>,
+  data: FacetRowType<T>,
   documentIndex = 0,
 ): void {
   const conversation = parseTql(filePath)
@@ -220,13 +189,13 @@ export function insertRow<T extends FacetName>(
  * Insert multiple rows into a TQL file facet
  * @param filePath - Path to the .tql file
  * @param facet - The facet to insert into
- * @param dataArray - Array of row data (without index)
+ * @param dataArray - Array of row data
  * @param documentIndex - Index of document in conversation (default: 0)
  */
 export function insertRows<T extends FacetName>(
   filePath: string,
   facet: T,
-  dataArray: Array<Omit<FacetRowType<T>, 'index'>>,
+  dataArray: Array<FacetRowType<T>>,
   documentIndex = 0,
 ): void {
   const conversation = parseTql(filePath)
@@ -244,7 +213,7 @@ export function insertRows<T extends FacetName>(
  * Delete a row from a TQL file facet by index
  * @param filePath - Path to the .tql file
  * @param facet - The facet to delete from
- * @param index - The index of the row to delete (1-based)
+ * @param index - The index of the row to delete (0-based)
  * @param documentIndex - Index of document in conversation (default: 0)
  */
 export function deleteRow<T extends FacetName>(
@@ -268,7 +237,7 @@ export function deleteRow<T extends FacetName>(
  * Delete multiple rows from a TQL file facet by indices
  * @param filePath - Path to the .tql file
  * @param facet - The facet to delete from
- * @param indices - Array of indices to delete (1-based)
+ * @param indices - Array of indices to delete (0-based)
  * @param documentIndex - Index of document in conversation (default: 0)
  */
 export function deleteRows<T extends FacetName>(
@@ -292,15 +261,15 @@ export function deleteRows<T extends FacetName>(
  * Update a row in a TQL file facet by index
  * @param filePath - Path to the .tql file
  * @param facet - The facet to update
- * @param index - The index of the row to update (1-based)
- * @param data - New data for the row (without index)
+ * @param index - The index of the row to update (0-based)
+ * @param data - New data for the row
  * @param documentIndex - Index of document in conversation (default: 0)
  */
 export function updateRow<T extends FacetName>(
   filePath: string,
   facet: T,
   index: number,
-  data: Partial<Omit<FacetRowType<T>, 'index'>>,
+  data: Partial<FacetRowType<T>>,
   documentIndex = 0,
 ): void {
   const conversation = parseTql(filePath)

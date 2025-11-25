@@ -1,5 +1,5 @@
 export function generateAmbiguityFacet(): string {
-  const headers = ['index', 'query_trigger', 'ambiguity_type', 'ambiguity_risk']
+  const headers = ['query_trigger', 'ambiguity_type', 'ambiguity_risk']
 
   // Calculate column widths based on header names
   const colWidths = headers.map((h) => h.length)
@@ -7,8 +7,8 @@ export function generateAmbiguityFacet(): string {
   // Build the table
   const lines: string[] = []
 
-  // Add prefix with row count of 0 (no data rows on initialization)
-  lines.push('@ambiguity[0]:')
+  // Add prefix
+  lines.push('@ambiguity:')
 
   // Add header row
   const headerRow = '| ' + headers.map((h, i) => h.padEnd(colWidths[i])).join(' | ') + ' |'

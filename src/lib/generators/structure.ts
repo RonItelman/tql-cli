@@ -29,7 +29,6 @@ export function generateStructureFacet(input: StructureFacetInput): string {
     column: Math.max(...structures.map((s) => s.column.length), 'column'.length),
     dataType: 'dataType'.length,
     format: 'format'.length,
-    index: Math.max('index'.length, headers.length.toString().length),
     maxValue: 'maxValue'.length,
     minValue: 'minValue'.length,
     nullAllowed: 'nullAllowed'.length,
@@ -38,14 +37,12 @@ export function generateStructureFacet(input: StructureFacetInput): string {
   // Build the table
   const lines: string[] = []
 
-  // Add prefix with row count
-  lines.push(`@structure[${headers.length}]:`)
+  // Add prefix
+  lines.push('@structure:')
 
   // Add header row
   const headerRow =
     '| ' +
-    'index'.padEnd(colWidths.index) +
-    ' | ' +
     'column'.padEnd(colWidths.column) +
     ' | ' +
     'nullAllowed'.padEnd(colWidths.nullAllowed) +
@@ -63,8 +60,6 @@ export function generateStructureFacet(input: StructureFacetInput): string {
   // Add separator row
   const separator =
     '|' +
-    '-'.repeat(colWidths.index + 2) +
-    '|' +
     '-'.repeat(colWidths.column + 2) +
     '|' +
     '-'.repeat(colWidths.nullAllowed + 2) +
@@ -80,11 +75,9 @@ export function generateStructureFacet(input: StructureFacetInput): string {
   lines.push(separator)
 
   // Add data rows (all fields blank except column name)
-  for (const [i, structure] of structures.entries()) {
+  for (const structure of structures) {
     const dataRow =
       '| ' +
-      (i + 1).toString().padEnd(colWidths.index) +
-      ' | ' +
       structure.column.padEnd(colWidths.column) +
       ' | ' +
       structure.nullAllowed.padEnd(colWidths.nullAllowed) +

@@ -10,11 +10,6 @@ import {getDocumentCount} from './types.js'
 export function generateTqlFromConversation(conversation: TqlConversation): string {
   const sections: string[] = []
 
-  // Add conversation header with document count
-  const docCount = getDocumentCount(conversation)
-  sections.push(`#conversation[${docCount}]:`)
-  sections.push('') // Empty line after conversation header
-
   // Iterate through sequence and output each item
   for (let i = 0; i < conversation.sequence.length; i++) {
     const item = conversation.sequence[i]
@@ -22,12 +17,19 @@ export function generateTqlFromConversation(conversation: TqlConversation): stri
     const value = Object.values(item)[0]
 
     if (key.startsWith('#document')) {
-      // Output document
-      sections.push(`${key}:`)
+      // Extract document index and output with new format
+      const match = key.match(/\#document\[\+?(\d+)\]/)
+      const docIndex = match ? match[1] : '0'
+      sections.push(`#document[${docIndex}]:`)
       sections.push(generateTqlFromJson(value as TqlDocument))
     } else if (key.startsWith('$diff')) {
-      // Output diff
-      sections.push(`${key}:`)
+      // Extract diff indices and output with new format: $diff(from,to):
+      const match = key.match(/\$diff\[\+?(\d+)→\+?(\d+)\]/)
+      if (match) {
+        sections.push(`$diff(${match[1]},${match[2]}):`)
+      } else {
+        sections.push(`${key}:`)
+      }
       sections.push(formatDiffAsMarkdown(value as any, false)) // No colors in file
     }
 
@@ -71,11 +73,11 @@ export function writeTql(filePath: string, conversation: TqlConversation): void 
 
 // Helper function to generate a table section
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function generateTable(headers: string[], rows: Record<string, any>[], rowCount: number, facetName: string): string {
+function generateTable(headers: string[], rows: Record<string, any>[], facetName: string): string {
   const lines: string[] = []
 
-  // Add facet header
-  lines.push(`@${facetName}[${rowCount}]:`)
+  // Add facet header (no row count)
+  lines.push(`@${facetName}:`)
 
   // Calculate column widths
   const colWidths: number[] = headers.map((header) => {
@@ -105,54 +107,53 @@ function generateTable(headers: string[], rows: Record<string, any>[], rowCount:
 
 function generateTableSection(doc: TqlDocument): string {
   if (doc.table.rows.length === 0) {
-    // Return empty table with index column only
-    const headers = ['index']
-    return generateTable(headers, [], 0, 'table')
+    // Return empty table with no columns
+    return generateTable([], [], 'table')
   }
 
   // Get all column names from the first row
   const firstRow = doc.table.rows[0]
   const headers = Object.keys(firstRow)
 
-  return generateTable(headers, doc.table.rows, doc.table.rows.length, 'table')
+  return generateTable(headers, doc.table.rows, 'table')
 }
 
 function generateMeaningSection(doc: TqlDocument): string {
-  const headers = ['index', 'column', 'definition']
-  return generateTable(headers, doc.meaning.rows, doc.meaning.rows.length, 'meaning')
+  const headers = ['column', 'definition']
+  return generateTable(headers, doc.meaning.rows, 'meaning')
 }
 
 function generateStructureSection(doc: TqlDocument): string {
-  const headers = ['index', 'column', 'nullAllowed', 'dataType', 'minValue', 'maxValue', 'format']
-  return generateTable(headers, doc.structure.rows, doc.structure.rows.length, 'structure')
+  const headers = ['column', 'nullAllowed', 'dataType', 'minValue', 'maxValue', 'format']
+  return generateTable(headers, doc.structure.rows, 'structure')
 }
 
 function generateAmbiguitySection(doc: TqlDocument): string {
-  const headers = ['index', 'query_trigger', 'ambiguity_type', 'ambiguity_risk']
-  return generateTable(headers, doc.ambiguity.rows, doc.ambiguity.rows.length, 'ambiguity')
+  const headers = ['query_trigger', 'ambiguity_type', 'ambiguity_risk']
+  return generateTable(headers, doc.ambiguity.rows, 'ambiguity')
 }
 
 function generateIntentSection(doc: TqlDocument): string {
-  const headers = ['index', 'query_trigger', 'clarifying_question', 'options', 'user_response', 'user_confirmed']
-  return generateTable(headers, doc.intent.rows, doc.intent.rows.length, 'intent')
+  const headers = ['query_trigger', 'clarifying_question', 'options', 'user_response', 'user_confirmed']
+  return generateTable(headers, doc.intent.rows, 'intent')
 }
 
 function generateContextSection(doc: TqlDocument): string {
-  const headers = ['index', 'key', 'value']
-  return generateTable(headers, doc.context.rows, doc.context.rows.length, 'context')
+  const headers = ['key', 'value']
+  return generateTable(headers, doc.context.rows, 'context')
 }
 
 function generateQuerySection(doc: TqlDocument): string {
-  const headers = ['index', 'user_message', 'timestamp_utc']
-  return generateTable(headers, doc.query.rows, doc.query.rows.length, 'query')
+  const headers = ['user_message', 'timestamp_utc']
+  return generateTable(headers, doc.query.rows, 'query')
 }
 
 function generateTasksSection(doc: TqlDocument): string {
-  const headers = ['index', 'name', 'description', 'formula']
-  return generateTable(headers, doc.tasks.rows, doc.tasks.rows.length, 'tasks')
+  const headers = ['name', 'description', 'formula']
+  return generateTable(headers, doc.tasks.rows, 'tasks')
 }
 
 function generateScoreSection(doc: TqlDocument): string {
-  const headers = ['index', 'measure', 'value']
-  return generateTable(headers, doc.score.rows, doc.score.rows.length, 'score')
+  const headers = ['measure', 'value']
+  return generateTable(headers, doc.score.rows, 'score')
 }
